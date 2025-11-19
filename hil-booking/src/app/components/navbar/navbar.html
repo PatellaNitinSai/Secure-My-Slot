@@ -1,0 +1,31 @@
+<nav class="app-navbar">
+    <div class="navbar__inner">
+  
+      <!-- Daimler Logo -->
+      <div class="daimler-logo" routerLink="/home" style="cursor:pointer">
+        <h1>DAIMLER TRUCK</h1>
+        <p>Innovation Center India</p>
+      </div>
+  
+      <div class="flex-spacer"></div>
+  
+      <!-- Notifications icon -->
+      <button mat-icon-button aria-label="Notifications">
+        <mat-icon>notifications</mat-icon>
+      </button>
+  
+      <!-- Profile icon + dropdown menu -->
+      <button mat-icon-button [matMenuTriggerFor]="profileMenu" aria-label="Profile Menu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+  
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item routerLink="/login">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+  
+    </div>
+  </nav>
+  

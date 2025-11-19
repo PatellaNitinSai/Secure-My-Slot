@@ -1,0 +1,170 @@
+:host {
+    display: block;
+    width: 100%;
+  }
+  
+  /* ===== Daimler Logo Section ===== */
+  .daimler-logo {
+    text-align: start;
+    font-family: 'Helvetica Neue', 'Optima', 'Segoe UI', sans-serif;
+    color: #000;
+    letter-spacing: 0.25em;
+    margin: 2rem 2rem 1rem 2rem;
+  
+    h1 {
+      font-size: 2rem;
+      font-weight: 300;
+      margin: 0;
+    }
+  
+    p {
+      font-size: 1rem;
+      font-weight: 300;
+      margin-top: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+  }
+  .back-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #0b1f4d; /* adjust to match navbar text */
+    font-weight: 600;
+  
+    mat-icon {
+      font-size: 20px;
+      color: #0b1f4d;
+    }
+  
+    &:hover {
+      background: rgba(11, 95, 255, 0.12);
+    }
+  }
+  
+  
+  /* ===== Slot Cards Section ===== */
+  .slot-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 2rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background: linear-gradient(180deg, rgba(11, 95, 255, 0.12), rgba(0, 180, 216, 0.06));
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  /* Card */
+  .slot-card {
+    background: #ffffff;
+    border-radius: 16px;
+    width: 310px;
+    min-height: 170px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    border: 1px solid rgba(226, 232, 240, 0.6);
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    }
+  
+    &.unavailable {
+      background: linear-gradient(145deg, #f8fafc 20%, #e2e8f0 100%);
+      cursor: not-allowed;
+      opacity: 0.9;
+      transform: none;
+      border: 1px dashed #94a3b8;
+  
+      h3,
+      p,
+      span {
+        color: #64748b;
+      }
+    }
+  }
+  
+  /* Header inside each card */
+  .slot-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  
+    h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #0f172a;
+      letter-spacing: 0.01em;
+    }
+  
+    p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #475569;
+    }
+  }
+  
+  /* Footer inside each card */
+  .slot-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.2rem;
+  
+    span {
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+  
+    .coming-soon {
+      background: rgba(226, 232, 240, 0.7);
+      border-radius: 6px;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.8rem;
+      color: #475569;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+  
+    button {
+      background: linear-gradient(90deg, #0b5fff, #00b4d8);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.45rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  
+      &:hover {
+        background: linear-gradient(90deg, #0046d5, #009ac4);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(11, 95, 255, 0.2);
+      }
+    }
+  }
+  
+  /* Responsive layout */
+  @media (max-width: 768px) {
+    .slot-container {
+      justify-content: center;
+    }
+  
+    .slot-card {
+      width: 90%;
+    }
+  
+    .daimler-logo {
+      margin: 1.5rem;
+    }
+  }
+  

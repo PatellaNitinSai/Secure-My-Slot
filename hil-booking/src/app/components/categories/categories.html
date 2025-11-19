@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+<button mat-button routerLink="/slot-types" class="back-btn" aria-label="Go back">
+  <mat-icon>arrow_back</mat-icon>
+  <span>Go Back</span>
+</button>
+<section class="action-cards">
+ 
+  <!-- View Slots -->
+  <a mat-card class="action-card" routerLink="/home">
+    <div class="action-card__inner">
+      <div class="action-card__icon">
+        <mat-icon>calendar_today</mat-icon>
+      </div>
+      <div class="action-card__content">
+        <div class="action-card__title">View Slots</div>
+        <div class="action-card__subtitle">See booked & available slots</div>
+      </div>
+      <div class="action-card__chev">
+        <mat-icon>chevron_right</mat-icon>
+      </div>
+    </div>
+  </a>
+
+  <!-- New Booking -->
+  <a mat-card class="action-card action-card--accent" routerLink="/booking">
+    <div class="action-card__inner">
+      <div class="action-card__icon">
+        <mat-icon>add</mat-icon>
+      </div>
+      <div class="action-card__content">
+        <div class="action-card__title">New Booking</div>
+        <div class="action-card__subtitle">Create a new slot reservation</div>
+      </div>
+      <div class="action-card__chev">
+        <mat-icon>chevron_right</mat-icon>
+      </div>
+    </div>
+  </a>
+
+</section>
+
+<app-footer></app-footer>
+

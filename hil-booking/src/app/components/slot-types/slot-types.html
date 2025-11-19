@@ -1,0 +1,46 @@
+<!-- Daimler Logo Header -->
+<app-navbar></app-navbar>
+
+
+
+<!-- Slot Cards Section -->
+<div class="slot-container">
+  <button mat-button routerLink="/login" class="back-btn" aria-label="Go back">
+    <mat-icon>arrow_back</mat-icon>
+    <span>Go Back</span>
+  </button>
+  <!-- Existing cards -->
+  <div
+    class="slot-card"
+    *ngFor="let slot of slots"
+    [class.unavailable]="!slot.available"
+    (click)="onBook(slot)"
+  >
+    <div class="slot-header">
+      <h3>{{ slot.title }}</h3>
+      <p>{{ slot.subtitle }}</p>
+    </div>
+
+    <div class="slot-footer">
+      <span>{{ slot.meta }}</span>
+      <button *ngIf="slot.available" routerLink="/slot-categories">Book Now</button>
+      <div class="coming-soon" *ngIf="!slot.available">Coming Soon</div>
+    </div>
+  </div>
+
+  <!-- 👉 NEW Approve User Card -->
+  <div class="slot-card" routerLink="/users-approvals" *ngIf="admin_mail=='patesai@tbdir.net'">
+    <div class="slot-header">
+      <h3>Approve User</h3>
+      <p>Admin controls</p>
+    </div>
+
+    <div class="slot-footer">
+      <span>Manage Signups</span>
+      <button routerLink="/users-approvals">Open</button>
+    </div>
+  </div>
+
+</div>
+
+<app-footer></app-footer>

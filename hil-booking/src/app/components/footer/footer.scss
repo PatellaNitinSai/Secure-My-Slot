@@ -1,0 +1,67 @@
+.app-footer {
+    background: #0f1724; /* dark footer */
+    color: #dbeafe;
+    padding: 18px 0 8px;
+    font-size: 13px;
+  
+    .app-footer__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 16px 12px;
+    }
+  
+    .footer__brand strong { font-weight: 700; }
+    .footer__meta {
+      margin-top: 6px;
+      .footer__email {
+        color: #c7e0ff;
+        text-decoration: underline;
+        margin: 0 8px;
+      }
+      .footer__sep { margin: 0 8px; opacity: 0.6; }
+    }
+  
+    .footer__right a {
+      color: #cfe8ff;
+      text-decoration: none;
+      margin-left: 12px;
+      &:hover { text-decoration: underline; }
+    }
+  
+    .app-footer__bar {
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding: 10px 16px;
+      text-align: center;
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+    }
+  
+    @media (max-width: 760px) {
+      .app-footer__inner { flex-direction: column; align-items: flex-start; }
+      .footer__right { margin-top: 8px; }
+    }
+  }
+  .daimler-logo {
+    text-align: start;
+    font-family: 'Helvetica Neue', 'Optima', 'Segoe UI', sans-serif;
+    color: white;
+    letter-spacing: 0.25em;
+    margin: 2rem 2rem 1rem 2rem;
+  
+    h1 {
+      font-size: 2rem;
+      font-weight: 300;
+      margin: 0;
+    }
+  
+    p {
+      font-size: 1rem;
+      font-weight: 300;
+      margin-top: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+  }

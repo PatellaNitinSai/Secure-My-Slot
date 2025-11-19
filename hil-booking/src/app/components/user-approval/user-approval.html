@@ -1,0 +1,162 @@
+<!-- HTML Template -->
+<app-navbar></app-navbar>
+
+<div class="page-container">
+  <!-- Top Header / Hero -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="page-breadcrumb">
+        <span>Admin Console</span>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">User Approvals</span>
+      </div>
+
+      <div class="page-title-row">
+        <div class="page-title-left">
+          <div class="page-icon">
+            <mat-icon>verified_user</mat-icon>
+          </div>
+          <div>
+            <h1 class="page-title">Pending Users</h1>
+            <p class="page-subtitle">
+              Review and approve user access requests to the HIL Slot Manager environment.
+            </p>
+          </div>
+        </div>
+
+        <div class="page-pill">
+          <span class="pill-dot"></span>
+          <span class="pill-text">Admin View</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-stats">
+      <div class="stat-card">
+        <span class="stat-label">Total Pending</span>
+        <span class="stat-value">{{ users.length }}</span>
+        <span class="stat-caption">Requests awaiting action</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="content-wrapper">
+    <!-- Loading state -->
+    <ng-container *ngIf="loading">
+      <div class="loading-state surface-card">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p class="loading-text">Loading user requests...</p>
+      </div>
+    </ng-container>
+
+    <!-- Empty state -->
+    <ng-container *ngIf="!loading && users.length === 0">
+      <div class="empty-state surface-card">
+        <mat-icon class="empty-icon">check_circle_outline</mat-icon>
+        <h3 class="empty-title">All caught up</h3>
+        <p class="empty-description">
+          There are no pending user approval requests at the moment.
+        </p>
+      </div>
+    </ng-container>
+
+    <!-- Users table -->
+    <div class="users-table-container" *ngIf="!loading && users.length">
+      <mat-card class="table-card">
+        <!-- Card header -->
+        <div class="table-header">
+          <div>
+            <h2 class="table-title">User access requests</h2>
+            <p class="table-subtitle">
+              Approve or decline access to the application. Changes take effect immediately.
+            </p>
+          </div>
+          <div class="table-meta">
+            <span class="meta-badge">
+              <span class="meta-dot meta-dot-pending"></span>
+              Pending: {{ users.length }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Table content -->
+        <div class="table-scroll">
+          <table mat-table class="users-table">
+            <!-- Static header row -->
+            <thead>
+              <tr class="table-head-row">
+                <th class="head-cell user-head">User</th>
+                <th class="head-cell status-head">Status</th>
+                <th class="head-cell actions-head">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr class="user-row" *ngFor="let user of users">
+                <!-- User cell -->
+                <td class="user-cell">
+                  <div class="user-avatar">
+                    <mat-icon>person</mat-icon>
+                  </div>
+                  <div class="user-details">
+                    <div class="user-name">{{ user.name }}</div>
+                    <div class="user-email">
+                      <mat-icon class="email-icon">email</mat-icon>
+                      {{ user.email }}
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Status -->
+                <td class="status-cell">
+                  <div class="status-badge" [ngClass]="user.status">
+                    <mat-icon class="status-icon">
+                      {{
+                        user.status === 'approved'
+                          ? 'check_circle'
+                          : user.status === 'declined'
+                          ? 'cancel'
+                          : 'schedule'
+                      }}
+                    </mat-icon>
+                    <span>{{ user.status | titlecase }}</span>
+                  </div>
+                </td>
+
+                <!-- Actions -->
+                <td class="actions-cell">
+                  <div class="action-buttons">
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      class="approve-btn"
+                      (click)="changeStatus(user, 'approved', user._id)"
+                      [disabled]="user.status === 'approved'"
+                    >
+                      <mat-icon>check</mat-icon>
+                      Approve
+                    </button>
+
+                    <button
+                      mat-raised-button
+                      color="warn"
+                      class="decline-btn"
+                      (click)="changeStatus(user, 'declined', user._id)"
+                      [disabled]="user.status === 'declined'"
+                    >
+                      <mat-icon>close</mat-icon>
+                      Decline
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

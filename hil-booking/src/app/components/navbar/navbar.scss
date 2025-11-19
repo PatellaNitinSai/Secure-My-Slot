@@ -1,0 +1,68 @@
+.daimler-logo {
+    text-align: start;
+    font-family: 'Helvetica Neue', 'Optima', 'Segoe UI', sans-serif;
+    color: #000;
+    letter-spacing: 0.25em;
+    margin: 2rem 2rem 1rem 2rem;
+  
+    h1 {
+      font-size: 2rem;
+      font-weight: 300;
+      margin: 0;
+    }
+  
+    p {
+      font-size: 1rem;
+      font-weight: 300;
+      margin-top: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+  }
+  
+  .app-navbar {
+    background: linear-gradient(180deg, rgba(11,95,255,0.12), rgba(0,180,216,0.06));
+    backdrop-filter: blur(6px);
+    padding: 10px 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  
+    .navbar__inner {
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+  
+    /* Logo text becomes dark navy for contrast */
+
+  
+    .flex-spacer {
+      flex: 1;
+    }
+  
+    /* Icons adjusted for light background */
+    button[mat-icon-button] {
+      color: #0b1f4d;         /* navy blue for icons */
+      transition: 0.2s ease;
+  
+      &:hover {
+        background: rgba(11, 95, 255, 0.12); /* soft highlight */
+      }
+    }
+  
+    /* Menu styling */
+    ::ng-deep .mat-mdc-menu-panel {
+      background: #ffffff !important;
+      border-radius: 10px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15) !important;
+    }
+  
+    ::ng-deep .mat-mdc-menu-item {
+      color: #0b1f4d !important;
+    }
+  
+    ::ng-deep .mat-mdc-menu-item mat-icon {
+      color: #1b2f56 !important; /* darker but subtle */
+    }
+  }
+  

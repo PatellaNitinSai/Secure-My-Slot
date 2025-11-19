@@ -1,0 +1,10 @@
+// src/app/app.ts
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [RouterOutlet], // only what the template uses
+  templateUrl: './app.html'
+})
+export class App {}

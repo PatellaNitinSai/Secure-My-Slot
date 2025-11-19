@@ -1,0 +1,399 @@
+<app-navbar></app-navbar>
+
+<mat-sidenav-container class="shell" autosize >
+  <mat-sidenav mode="side" opened class="custom-sidenav" role="complementary" aria-label="Filters" style="width:250px;">
+    <div class="sidenav-header" >
+      <!-- <div class="brand-logo-container">
+        <div class="brand-logo">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 4L4 12V20C4 29 10 35.4 20 38C30 35.4 36 29 36 20V12L20 4Z" fill="url(#logo-gradient)"/>
+            <path d="M14 20L18 24L26 16" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="logo-gradient" x1="4" y1="4" x2="36" y2="38" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#0ea5a4"/>
+                <stop offset="1" stop-color="#0f4c81"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+       
+      </div> -->
+    </div> 
+
+    <div class="sidenav-divider"></div>
+    <button mat-button routerLink="/slot-categories" class="back-btn" aria-label="Go back">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Go Back</span>
+    </button>
+    
+    
+    <h3 class="sidenav__title">
+      <mat-icon class="section-icon">filter_alt</mat-icon>
+      Advanced Filters
+    </h3>
+
+    <form [formGroup]="filters" class="filters" (ngSubmit)="applyFilters()">
+      <mat-form-field appearance="outline" class="full modern-field">
+        <mat-label>Search</mat-label>
+        <mat-icon matPrefix class="field-icon">search</mat-icon>
+        <input matInput placeholder="Name, email or tag" formControlName="q" />
+        <button *ngIf="filters.value.q" matSuffix mat-icon-button aria-label="Clear" (click)="filters.patchValue({ q: '' })">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full modern-field">
+        <mat-label>Date Range</mat-label>
+        <mat-icon matPrefix class="field-icon">calendar_today</mat-icon>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="date"
+          (dateChange)="onDateSelected($event.value)"
+          placeholder="Select date"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full modern-field">
+        <mat-label>Status</mat-label>
+        <mat-icon matPrefix class="field-icon">label</mat-icon>
+        <mat-select formControlName="status">
+          <mat-option value="">All Statuses</mat-option>
+          <mat-option *ngFor="let s of statuses" [value]="s">
+            <span class="status-option">
+              <span class="status-dot" [attr.data-status]="s"></span>
+              {{ s | titlecase }}
+            </span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="filters__actions">
+        <button mat-flat-button color="primary" type="submit" class="btn-primary">
+          <mat-icon>done</mat-icon>
+          Apply Filters
+        </button>
+        <button mat-stroked-button type="button" (click)="clearFilters()" class="btn-secondary">
+          <mat-icon>refresh</mat-icon>
+          Reset
+        </button>
+      </div>
+    </form>
+
+    <div class="sidenav-footer">
+      <div class="quick-stats">
+        <div class="quick-stat-item">
+          <mat-icon>schedule</mat-icon>
+          <div>
+            <span class="stat-label">Last Updated</span>
+            <span class="stat-value">Just now</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content style="width:990px;">
+    <mat-toolbar color="primary" class="toolbar">
+      <div class="toolbar-left">
+        <!-- <button mat-icon-button class="menu-toggle" aria-label="Toggle menu">
+          <mat-icon>menu</mat-icon>
+        </button> -->
+        <span class="brand">
+          <mat-icon class="brand-icon">event_available</mat-icon>
+          Bookings Dashboard
+        </span>
+      </div>
+
+      <span class="spacer"></span>
+
+      <div class="toolbar-actions">
+        <button mat-stroked-button (click)="toggleView()" class="toolbar-btn">
+          <mat-icon>{{ viewMode === 'grid' ? 'view_list' : 'grid_view' }}</mat-icon>
+          {{ viewMode === 'grid' ? 'List' : 'Grid' }}
+        </button>
+
+        <button mat-stroked-button color="accent" (click)="exportCSV()" class="toolbar-btn">
+          <mat-icon>cloud_download</mat-icon>
+          Export
+        </button>
+
+        <button mat-flat-button color="primary" (click)="loadBookings()" class="toolbar-btn btn-refresh">
+          <mat-icon>sync</mat-icon>
+          Refresh
+        </button>
+
+        <!-- <button mat-icon-button [matMenuTriggerFor]="menu" class="toolbar-btn"> -->
+          <!-- <mat-icon>more_vert</mat-icon> -->
+        <!-- </button> -->
+        <mat-menu #menu="matMenu">
+          <!-- <button mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>help_outline</mat-icon>
+            <span>Help</span>
+          </button> -->
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+
+    <section class="summary" *ngIf="!loading">
+      <mat-card class="summary__card summary__card--primary">
+        <div class="card-icon-wrapper card-icon--primary">
+          <mat-icon>inventory_2</mat-icon>
+        </div>
+        <div class="card-content">
+          <div class="summary__label">Total Bookings</div>
+          <div class="summary__value">{{ total }}</div>
+          <div class="summary__trend">
+            <mat-icon class="trend-icon trend-up">trending_up</mat-icon>
+            <span>+12.5% vs last month</span>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="summary__card summary__card--success">
+        <div class="card-icon-wrapper card-icon--success">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="card-content">
+          <div class="summary__label">Confirmed</div>
+          <div class="summary__value">{{ booked }}</div>
+          <div class="summary__trend">
+            <mat-icon class="trend-icon trend-up">trending_up</mat-icon>
+            <span>+8.3% active rate</span>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="summary__card summary__card--warning">
+        <div class="card-icon-wrapper card-icon--warning">
+          <mat-icon>schedule</mat-icon>
+        </div>
+        <div class="card-content">
+          <div class="summary__label">Upcoming</div>
+          <div class="summary__value">{{ upcoming }}</div>
+          <div class="summary__trend">
+            <mat-icon class="trend-icon trend-neutral">trending_flat</mat-icon>
+            <span>Next 7 days</span>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="summary__card summary__card--info">
+        <div class="card-icon-wrapper card-icon--info">
+          <mat-icon>analytics</mat-icon>
+        </div>
+        <div class="card-content">
+          <div class="summary__label">Conversion Rate</div>
+          <div class="summary__value">94.2%</div>
+          <div class="summary__trend">
+            <mat-icon class="trend-icon trend-up">trending_up</mat-icon>
+            <span>+3.1% efficiency</span>
+          </div>
+        </div>
+      </mat-card>
+    </section>
+
+    <mat-progress-bar *ngIf="loading" mode="indeterminate" class="modern-progress"></mat-progress-bar>
+
+    <div *ngIf="errorMessage" class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <section *ngIf="!loading && filteredSlots.length === 0" class="empty">
+      <div class="empty-illustration">
+        <mat-icon>inbox</mat-icon>
+      </div>
+      <h3>No bookings found</h3>
+      <p>Try adjusting your filters or create a new booking</p>
+      <button mat-flat-button color="primary" class="empty-cta">
+        <mat-icon>add</mat-icon>
+        Create Booking
+      </button>
+    </section>
+
+    <section class="slots" [attr.data-view]="viewMode">
+      <ng-container *ngIf="viewMode === 'grid'; else listView">
+        <div class="cards-grid">
+          <mat-card class="slot" *ngFor="let s of pageSlice" (click)="selectSlot(s)">
+            <div class="card-header-accent" [attr.data-status]="s.status"></div>
+            
+            <mat-card-header>
+              <div class="avatar-circle">
+                <mat-icon>person</mat-icon>
+              </div>
+              <div class="header-content">
+                <mat-card-title>{{ s.rawBooking?.name || s.title }}</mat-card-title>
+                <mat-card-subtitle>
+                  <mat-icon class="subtitle-icon">location_on</mat-icon>
+                  <span *ngIf="s.location">{{ s.location }}</span>
+                  <span class="separator">•</span>
+                  <mat-icon class="subtitle-icon">access_time</mat-icon>
+                  <span>{{ timeRange(s) }}</span>
+                </mat-card-subtitle>
+              </div>
+            </mat-card-header>
+
+            <mat-card-content>
+              <div class="booking-details" *ngIf="s.rawBooking">
+                <div class="detail-row">
+                  <mat-icon class="detail-icon">fingerprint</mat-icon>
+                  <span class="detail-label">ID:</span>
+                  <span class="detail-value">{{ s.rawBooking.booking_id ?? s.rawBooking._id }}</span>
+                </div>
+                <div class="detail-row">
+                  <mat-icon class="detail-icon">email</mat-icon>
+                  <span class="detail-label">Email:</span>
+                  <span class="detail-value">{{ s.rawBooking.email }}</span>
+                </div>
+                <div class="detail-row">
+                  <mat-icon class="detail-icon">event</mat-icon>
+                  <span class="detail-label">Date:</span>
+                  <span class="detail-value">{{ (s.rawBooking.date?.$date ?? s.rawBooking.date) | date:'mediumDate' }}</span>
+                </div>
+                <div class="detail-row">
+                  <mat-icon class="detail-icon">schedule</mat-icon>
+                  <span class="detail-label">Time:</span>
+                  <span class="detail-value">{{ s.rawBooking.selectedSlot?.startTime }} → {{ s.rawBooking.selectedSlot?.endTime }}</span>
+                </div>
+                <div class="detail-row">
+                  <mat-icon class="detail-icon">timer</mat-icon>
+                  <span class="detail-label">Duration:</span>
+                  <span class="detail-value">{{ s.rawBooking.duration }}</span>
+                </div>
+              </div>
+            </mat-card-content>
+
+            <mat-card-actions>
+              <mat-chip [ngClass]="'status--' + s.status" selected>
+                <mat-icon class="chip-icon">circle</mat-icon>
+                {{ s.status }}
+              </mat-chip>
+              <span class="spacer"></span>
+              <button mat-icon-button color="primary" (click)="$event.stopPropagation(); openDetails(s)" matTooltip="View Details">
+                <mat-icon>visibility</mat-icon>
+              </button>
+              <button mat-icon-button (click)="$event.stopPropagation()" matTooltip="More Actions">
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </ng-container>
+
+      <ng-template #listView>
+        <div class="list-container">
+          <mat-list class="modern-list">
+            <mat-list-item *ngFor="let s of pageSlice" (click)="selectSlot(s)" class="modern-list-item">
+              <div class="list-item-avatar">
+                <mat-icon>person</mat-icon>
+              </div>
+              <div class="list-item-content">
+                <div mat-line class="list-title">{{ s.rawBooking?.name || s.title }}</div>
+                <div mat-line class="list-sub">
+                  <mat-icon>location_on</mat-icon>
+                  {{ s.location }}
+                  <span class="separator">•</span>
+                  <mat-icon>access_time</mat-icon>
+                  {{ timeRange(s) }}
+                </div>
+              </div>
+              <mat-chip [ngClass]="'status--' + s.status" class="list-status">{{ s.status }}</mat-chip>
+              <button mat-stroked-button color="primary" (click)="$event.stopPropagation(); openDetails(s)">
+                <mat-icon>visibility</mat-icon>
+                Details
+              </button>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </ng-template>
+    </section>
+
+    <mat-paginator 
+      class="sticky-paginator"
+      [length]="filteredSlots.length"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="[6,12,24,48]"
+      (page)="onPage($event)">
+    </mat-paginator>
+
+    <mat-card *ngIf="selectedBooking" class="booking-inspector">
+      <div class="inspector-header">
+        <div>
+          <mat-icon class="inspector-icon">description</mat-icon>
+          <h2>Booking Details</h2>
+        </div>
+        <button mat-icon-button (click)="selectedBooking = null">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      
+      <mat-card-content>
+        <div class="inspector-section">
+          <h3>Customer Information</h3>
+          <div class="detail-row">
+            <mat-icon class="detail-icon">person</mat-icon>
+            <span class="detail-label">Name:</span>
+            <span class="detail-value">{{ selectedBooking.name }}</span>
+          </div>
+          <div class="detail-row">
+            <mat-icon class="detail-icon">email</mat-icon>
+            <span class="detail-label">Email:</span>
+            <span class="detail-value">{{ selectedBooking.email }}</span>
+          </div>
+        </div>
+
+        <div class="inspector-divider"></div>
+
+        <div class="inspector-section">
+          <h3>Booking Information</h3>
+          <div class="detail-row">
+            <mat-icon class="detail-icon">fingerprint</mat-icon>
+            <span class="detail-label">Booking ID:</span>
+            <span class="detail-value">{{ selectedBooking.booking_id ?? selectedBooking._id }}</span>
+          </div>
+          <div class="detail-row">
+            <mat-icon class="detail-icon">event</mat-icon>
+            <span class="detail-label">Date:</span>
+            <span class="detail-value">{{ (selectedBooking.date?.$date ?? selectedBooking.date) | date:'fullDate' }}</span>
+          </div>
+          <div class="detail-row">
+            <mat-icon class="detail-icon">schedule</mat-icon>
+            <span class="detail-label">Time Slot:</span>
+            <span class="detail-value">{{ selectedBooking.selectedSlot?.startTime }} → {{ selectedBooking.selectedSlot?.endTime }}</span>
+          </div>
+          <div class="detail-row">
+            <mat-icon class="detail-icon">timer</mat-icon>
+            <span class="detail-label">Duration:</span>
+            <span class="detail-value">{{ selectedBooking.duration }}</span>
+          </div>
+          <div class="detail-row">
+            <mat-icon class="detail-icon">history</mat-icon>
+            <span class="detail-label">Created:</span>
+            <span class="detail-value">{{ (selectedBooking.created_at?.$date ?? selectedBooking.created_at) | date:'short' }}</span>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="inspector-actions">
+        <button mat-flat-button color="primary">
+          <mat-icon>edit</mat-icon>
+          Edit
+        </button>
+        <button mat-stroked-button color="warn">
+          <mat-icon>cancel</mat-icon>
+          Cancel Booking
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<app-footer></app-footer>

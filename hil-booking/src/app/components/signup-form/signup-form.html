@@ -1,0 +1,80 @@
+<!-- src/app/components/signup-form/signup-form.component.html -->
+<div class="signup-root">
+    <div class="signup-split">
+      <aside class="left-panel" role="complementary" aria-hidden="false">
+        <div class="left-inner">
+          <div class="left-logo">
+            <!-- optional image bg or inline mark -->
+            <img src="https://tse1.mm.bing.net/th/id/OIP.EmPgnOgFrNeBbXj_5QAEbgHaHa?pid=Api" style="width:115px;height:115px; border-radius: 12px;" alt="Daimler Truck HIL logo" />
+        </div>
+  
+          <h1 class="left-title">Create your account</h1>
+          <p class="left-sub">Get secure access to HIL slot booking and lab resources.</p>
+  
+          <div class="left-cta">
+            <p class="muted">Already have an account?</p>
+            <a routerLink="/login" class="btn ghost">Sign in</a>
+          </div>
+        </div>
+      </aside>
+  
+      <main class="right-panel" role="main">
+        <div class="right-inner">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" class="signup-card" novalidate>
+            <div class="field">
+              <label for="name">Full Name</label>
+              <input id="name" type="text" formControlName="name"/>
+              <div class="error" *ngIf="name.touched">
+                <small *ngIf="name.hasError('required')">Name is required.</small>
+                <small *ngIf="name.hasError('minlength')">Name must be at least 2 characters.</small>
+              </div>
+            </div>
+  
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" type="email" formControlName="email" autocomplete="email" />
+              <div class="error" *ngIf="email.touched">
+                <small *ngIf="email.hasError('required')">Email is required.</small>
+                <small *ngIf="email.hasError('email')">Enter a valid email address.</small>
+              </div>
+            </div>
+  
+            <div class="field">
+              <label for="password">Password</label>
+              <input id="password" type="password" formControlName="password" autocomplete="new-password" />
+              <div class="error" *ngIf="password.touched">
+                <small *ngIf="password.hasError('required')">Password is required.</small>
+                <small *ngIf="password.hasError('minlength')">Password must be at least 6 characters.</small>
+              </div>
+            </div>
+  
+            <div class="field">
+              <label for="confirmPassword">Confirm Password</label>
+              <input id="confirmPassword" type="password" formControlName="confirmPassword" />
+              <div class="error" *ngIf="confirmPassword.touched">
+                <small *ngIf="confirmPassword.hasError('required')">Confirm Password is required.</small>
+                <small *ngIf="!passwordsMatch()">Passwords must match.</small>
+              </div>
+            </div>
+  
+            <div class="actions" >
+              <button type="submit" class="btn primary" style="background-color: skyblue;" [disabled]="loading">
+                <span *ngIf="!loading" style="color: black">Create account</span>
+                <span class="spinner" *ngIf="loading"></span>
+              </button>
+              <!-- <button type="submit" class="btn primary" style="background-color: skyblue;" [disabled]="loading">
+                <span *ngIf="!loading" style="color: black">Continue with Daimler Credentials</span>
+                <span class="spinner" *ngIf="loading"></span>
+              </button> -->
+              <button type="button" class="btn ghost" routerLink="/login">Back to sign in</button>
+            </div>
+  
+            <footer class="signin">
+              <p class="notes">By creating an account you agree to acceptable use policy.</p>
+            </footer>
+          </form>
+        </div>
+      </main>
+    </div>
+  </div>
+  <app-footer></app-footer>
