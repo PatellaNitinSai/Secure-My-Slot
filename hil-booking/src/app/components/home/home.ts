@@ -98,7 +98,7 @@ export class Home implements OnInit {
 
   selectedBooking: any = null;
 
-  private readonly API = 'http://localhost:3000/api/auth/get-bookings';
+  private readonly API = 'https://secure-my-slot.onrender.com/api/auth/get-bookings';
 
   private router = inject(Router);
 
