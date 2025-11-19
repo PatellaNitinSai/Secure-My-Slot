@@ -43,7 +43,7 @@ export class SignupForm {
     this.loading = true;
     const payload = { name: this.name.value, email: this.email.value, password: this.password.value };
     console.log('Signup payload', payload);
-    this.http.post("http://localhost:3000/api/auth/register",payload).subscribe({
+    this.http.post("https://secure-my-slot.onrender.com/api/auth/register",payload).subscribe({
       next : (res)=>{
         console.log(res)
       }
