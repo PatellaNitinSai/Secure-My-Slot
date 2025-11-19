@@ -102,7 +102,7 @@ loginWithDaimler() {
     };
 
     this.http
-      .post('http://localhost:3000/api/auth/login', payload)
+      .post('https://secure-my-slot.onrender.com/api/auth/login', payload)
       .subscribe({
         next: (res: any) => {
           localStorage.setItem('email', res.user.email);
