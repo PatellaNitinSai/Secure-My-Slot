@@ -40,7 +40,7 @@ export class UserApproval implements OnInit {
   users: AppUser[] = [];
   loading = false;
   total: number = 0;
-  private readonly baseUrl = 'http://localhost:3000/api/auth';
+  private readonly baseUrl = 'https://secure-my-slot.onrender.com/api/auth';
   private router = inject(Router);
 
   constructor(private http: HttpClient) {}
