@@ -146,7 +146,7 @@ export class BookingDialog implements OnInit {
     // include token in header
     const opts = this.makeAuthHeaders();
 
-    this.http.get("http://localhost:3000/api/auth/get-bookings", opts).subscribe({
+    this.http.get("https://secure-my-slot.onrender.com/api/auth/get-bookings", opts).subscribe({
       next: (res: any) => {
         this.bookings_data = res?.data ?? [];
         this.start_times = this.bookings_data.map(b => b?.selectedSlot?.startTime).filter(Boolean);
@@ -302,7 +302,7 @@ export class BookingDialog implements OnInit {
 
     const opts = this.makeAuthHeaders();
 
-    this.http.post('http://localhost:3000/api/auth/bookings', payload, opts).subscribe({
+    this.http.post('https://secure-my-slot.onrender.com/api/auth/bookings', payload, opts).subscribe({
       next: (res: any) => {
         console.log('Booking POST response:', res);
 
