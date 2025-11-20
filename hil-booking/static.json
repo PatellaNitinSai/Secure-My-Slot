@@ -1,0 +1,7 @@
+{
+    "root": "dist/hil-booking",
+    "routes": [
+      { "source": "**", "destination": "/index.html" }
+    ]
+  }
+  
