@@ -33,18 +33,8 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-/* API routes - keep these before static/fallback */
 app.use('/api/auth', authRoutes);
 
-/* Serve Angular static files */
-const distPath = path.join(__dirname, 'dist', 'hil-booking');
-app.use(express.static(distPath));
-
-/**
- * SPA fallback (safe approach)
- * This will catch all requests that weren't handled by previous routes/static files
- * and return the index.html so the client-side router can handle the path.
- */
 app.use((req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
 });
