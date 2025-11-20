@@ -1,13 +1,13 @@
 {
   "name": "hil-booking",
   "version": "0.0.0",
- "scripts": {
-  "ng": "ng",
-  "start": "ng serve",
-  "build": "ng build --configuration production",
-  "watch": "ng build --watch --configuration development",
-  "test": "ng test"
-},
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build --configuration production",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
   "prettier": {
     "printWidth": 100,
     "singleQuote": true,
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@angular/build": "^20.3.7",
-    "@angular/cli": "^20.3.7",
+    "@angular/cli": "^20.3.11",
     "@angular/compiler-cli": "^20.3.0",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.9.0",
